@@ -5,6 +5,9 @@ npm install -g express-generator
 
 express
 
+jika error jalankan sampai tidak ada error/vulnerabilities
+npm audit fix --force
+
 npm i whatsapp-web.js
 
 
