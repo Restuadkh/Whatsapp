@@ -11,5 +11,11 @@ npm audit fix --force
 npm i whatsapp-web.js
 
 
-node_modules > WhatsApp > Client.js
-const INTRO_IMG_SELECTOR = '[data-icon=\'chat\']';
+
+Tambahkan/edit file "node_modules > WhatsApp > Client.js"
+
+        const INTRO_IMG_SELECTOR = 'div[role=\'textbox\']';
+
+
+npm i qrcore-terminal
+npm i body-parser
