@@ -1,5 +1,6 @@
 Test Upload Git
 
+git config --global core.autocrlf false
 
 npm install -g express-generator
 
