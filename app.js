@@ -5,15 +5,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyParser = require("body-parser");
-const mysql = require('mysql2');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const db = mysql.createConnection({
-    host: 'localhost',  // Ganti dengan host MySQL Anda
-    user: 'root',       // Ganti dengan nama pengguna MySQL Anda
-    password: '', // Ganti dengan kata sandi MySQL Anda
-    database: 'testing' // Ganti dengan nama database Anda
-});
+var db = require('./controllers/DbController')
 var app = express();
 
 app.use(session({
