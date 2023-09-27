@@ -15,6 +15,7 @@ Tambahkan/edit file "node_modules > WhatsApp > Client.js"
 
         const INTRO_IMG_SELECTOR = 'div[role=\'textbox\']';
 
+npm install mysql2
 
 npm i qrcode-terminal
 npm i body-parser

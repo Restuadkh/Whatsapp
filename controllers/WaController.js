@@ -1,7 +1,7 @@
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const { response } = require("express");
-var db = require('./DbController')
+var db = require("./DbController");
 
 let login = 0;
 
@@ -27,27 +27,45 @@ if (client.info === undefined) {
 }
 
 client.on("message", (message) => {
-  let [number, code] = message.id.remote.split('@');
+  let full_massage = message;
+  let [number, code] = message.id.remote.split("@");
   let chatid = message._data.id.id;
   let name = message._data.notifyName;
   let msg = message._data.body;
   // console.log(name);
   // console.log(msg);
-  if (code = 'c.us') {
-    const sql = 'INSERT INTO mgsin (number, name, chatid, type, massage, time) VALUES (?, ?, ?, ?, ?, NOW())';
+  const sql = "INSERT INTO logs (text, time) VALUES (?, ?, NOW())";
+
+  db.query(sql, [full_massage], (err, results) => {
+    if (err) {
+      console.error("Error executing query:", err);
+      // res.send('Terjadi kesalahan saat menyimpan chat.');
+      return;
+    }
+    console.log(
+      "Chat log saved:",
+      results,
+      "Chat log berhasil disimpan : ",
+      name
+    );
+    // res.send('Chat log berhasil disimpan.');
+  });
+
+  if ((code = "c.us")) {
+    const sql =
+      "INSERT INTO mgsin (number, name, chatid, type, massage, time) VALUES (?, ?, ?, ?, ?, NOW())";
 
     db.query(sql, [number, name, chatid, code, msg], (err, results) => {
       if (err) {
-        console.error('Error executing query:', err);
+        console.error("Error executing query:", err);
         // res.send('Terjadi kesalahan saat menyimpan chat.');
         return;
       }
 
-      console.log('Chat log saved:', results);
+      console.log("Chat log saved:", results);
       // res.send('Chat log berhasil disimpan.');
     });
-  } else if (code = 'g.us') {
-
+  } else if ((code = "g.us")) {
   }
 
   // if (message.body !== '') {
@@ -76,8 +94,8 @@ const api = async (req, res) => {
       const account = await client.isRegisteredUser(No);
 
       if (account) {
-        let status = '';
-        if (Reply !== '') {
+        let status = "";
+        if (Reply !== "") {
           status = client.reply(Mgs, Reply);
         } else {
           status = client.sendMessage(No, Msg);
