@@ -11,6 +11,7 @@ const api = async (req, res) => {
     let group = false;
     let status = '';
     let response = '';
+    let account = '';
     console.log(No);
     if (info) {
         if ((No === undefined)) {
@@ -29,12 +30,24 @@ const api = async (req, res) => {
             }
             try {
                 if(group==false){
-                const account = await client.isRegisteredUser(No);
+                    account = await client.isRegisteredUser(No);
                 }
                 if (account) {
                     response = await client.sendMessage(No, Msg);
                     status = "Terkirim";
                     rstatus = 200;
+                    if (response) {
+                        const sql =
+                          "INSERT INTO mgsout (id_wa, receive_to, text, response, time) VALUES (?, ?, ?, ?, NOW())";
+                    
+                        db.query(sql, [info.wid.user, No, Msg, response], (err, results) => {
+                          if (err) {
+                            console.error("Error executing query:", err);
+                            return;
+                          }
+                          console.log("Chat log saved:", results);
+                        });
+                      }
                 } else {
                     status = "Tidak terdaftar";
                     rstatus = 404;

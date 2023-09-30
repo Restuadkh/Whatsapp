@@ -357,3 +357,134 @@ Message {
     [Symbol(kCapture)]: false
   }
 
+////////////////////////////////////////////
+
+PrivateChat {
+  id: {
+    server: 'broadcast',
+    user: 'status',
+    _serialized: 'status@broadcast'
+  },
+  name: '',
+  isGroup: false,
+  isReadOnly: undefined,
+  unreadCount: 0,
+  timestamp: undefined,
+  archived: undefined,
+  pinned: false,
+  isMuted: false,
+  muteExpiration: 0,
+  lastMessage: undefined
+}
+
+
+/////////////////////////////////////
+
+PrivateChat {
+  id: {
+    server: 'c.us',
+    user: '6285172020817',
+    _serialized: '6285172020817@c.us'
+  },
+  name: '+62 851-7202-0817',
+  isGroup: false,
+  isReadOnly: false,
+  unreadCount: 0,
+  timestamp: 1695797891,
+  archived: undefined,
+  pinned: false,
+  isMuted: false,
+  muteExpiration: 0,
+  lastMessage: Message {
+    _data: {
+      id: [Object],
+      viewed: false,
+      body: '123',
+      type: 'chat',
+      t: 1695951183,
+      notifyName: 'Paijo Santoso',
+      from: [Object],
+      to: [Object],
+      self: 'in',
+      ack: 1,
+      invis: false,
+      isNewMsg: true,
+      star: false,
+      kicNotified: false,
+      recvFresh: true,
+      isFromTemplate: false,
+      thumbnail: '',
+      pollInvalidated: false,
+      isSentCagPollCreation: false,
+      latestEditMsgKey: null,
+      latestEditSenderTimestampMs: null,
+      mentionedJidList: [],
+      groupMentions: [],
+      isVcardOverMmsDocument: false,
+      labels: [],
+      hasReaction: false,
+      ephemeralSettingTimestamp: 1695728706,
+      disappearingModeInitiator: 'chat',
+      inviteGrpType: 'DEFAULT',
+      productHeaderImageRejected: false,
+      lastPlaybackProgress: 0,
+      isDynamicReplyButtonsMsg: false,
+      isMdHistoryMsg: false,
+      stickerSentTs: 0,
+      isAvatar: false,
+      lastUpdateFromServerTs: 0,
+      invokedBotWid: null,
+      bizBotType: null,
+      botResponseTargetId: null,
+      botPluginType: null,
+      botPluginReferenceIndex: null,
+      botPluginSearchProvider: null,
+      botPluginSearchUrl: null,
+      requiresDirectConnection: false,
+      links: []
+    },
+    mediaKey: undefined,
+    id: {
+      fromMe: false,
+      remote: '6285172020817@c.us',
+      id: '3EB0E8D989E9B8452109CB',
+      _serialized: 'false_6285172020817@c.us_3EB0E8D989E9B8452109CB'
+    },
+    ack: 1,
+    hasMedia: false,
+    body: '123',
+    type: 'chat',
+    timestamp: 1695951183,
+    from: '6285172020817@c.us',
+    to: '6289671533195@c.us',
+    author: undefined,
+    deviceType: 'android',
+    isForwarded: undefined,
+    forwardingScore: 0,
+    isStatus: false,
+    isStarred: false,
+    broadcast: undefined,
+    fromMe: false,
+    hasQuotedMsg: false,
+    hasReaction: false,
+    duration: undefined,
+    location: undefined,
+    vCards: [],
+    inviteV4: undefined,
+    mentionedIds: [],
+    orderId: undefined,
+    token: undefined,
+    isGif: false,
+    isEphemeral: undefined,
+    links: []
+  }
+}
+Chat log saved: ResultSetHeader {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 35,
+  info: '',
+  serverStatus: 2,
+  warningStatus: 0,
+  changedRows: 0
+}
