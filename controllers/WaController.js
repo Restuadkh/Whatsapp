@@ -39,36 +39,33 @@ if (client.info === undefined) {
 }
 
 client.on("message", async (message) => {
-  const values = {
-    id: message.id.id,
-    viewed: message._data.viewed,
-    body: message.body,
-    type: message.type,
-    t: message._data.t,
-    NotifyName: message._data.NotifyName,
-    from: message.from,
-    to: message.to,
-    author: message.author,
-    self: message._data.self,
-    ack: message.ack,
-    isNewMsg: message._data.isNewMsg,
-    star: message.star,
-  };
-  const MessageData = {
-    sender: message.from,
-    text: message.body,
-    timestamp: message.timestamp,
-  };
+  let response = JSON.stringify(message);
   const chat = await message.getChat();
-  const user = await message.id.user;
+
   let [number, code] = message.id.remote.split("@");
   let chatid = message._data.id.id;
   let name = message._data.notifyName;
   let msg = message._data.body;
-  let id_wa = message.to;
+
   let time = message._data.t;
+
   console.log("Chat Respons", chat);
   console.log("Message Respons", message);
+
+  try {
+    const sql =
+      "INSERT INTO logs_messages_in (response, created_at) VALUES (?, NOW())";
+
+    db.query(sql, [response], (err, results) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        return;
+      }
+      console.log("Chat log saved:", results);
+    });
+  } catch (error) {
+    console.error("Error executing message:", error);
+  }
 
   if (message.hasMedia) {
     try {
@@ -89,47 +86,6 @@ client.on("message", async (message) => {
       console.log(`Media file Error : ${error}`);
     }
     // Unduh media dan simpan ke dalam folder 'media'
-  }
-
-  if (message) {
-    console.log(" log message:", values);
-    if (values.notifyName == "undefined ") values.notifyName = false;
-    if (values.author == "undefined ") values.author = false;
-    try {
-      const sql = `
-      INSERT INTO messages 
-      (id, viewed, body, type, t, notifyName, messageFrom, messageTo, author, self, ack, isNewMsg, create_at) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
-    `;
-      // const sql = "INSERT INTO logs (id_wa, text, time) VALUES (?, ?, NOW())";
-
-      db.query(
-        sql,
-        [
-          values.id,
-          values.viewed,
-          values.body,
-          values.type,
-          values.t,
-          values.notifyName,
-          values.messageFrom,
-          values.messageTo,
-          values.author,
-          values.self,
-          values.ack,
-          values.isNewMsg,
-        ],
-        (err, results) => {
-          if (err) {
-            console.error("Error executing query:", err);
-            return;
-          }
-          console.log("Chat log saved:", results);
-        }
-      );
-    } catch (error) {
-      console.error("Error executing message:", error);
-    }
   }
 
   if (!chat.isGroup) {
@@ -153,12 +109,6 @@ client.on("message", async (message) => {
   } else {
     console.log("Group", name);
   }
-
-  // if (message.body !== '') {
-  //   message.reply('Ketik *#Daftar#Alamat*');
-  // } else if (message.body === '#Daftar') {
-  //     message.reply('pong');
-  //   }
 });
 
 client.initialize();
