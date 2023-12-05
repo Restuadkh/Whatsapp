@@ -39,6 +39,21 @@ if (client.info === undefined) {
 }
 
 client.on("message", async (message) => {
+  const values = {
+    id: message.id.id,
+    viewed: message._data.viewed,
+    body: message.body,
+    type: message.type,
+    t: message._data.t,
+    NotifyName: message._data.NotifyName,
+    from: message.from,
+    to: message.to,
+    author: message.author,
+    self: message._data.self,
+    ack: message.ack,
+    isNewMsg: message._data.isNewMsg,
+    star: message.star,
+  };
   const MessageData = {
     sender: message.from,
     text: message.body,
@@ -56,32 +71,65 @@ client.on("message", async (message) => {
   console.log("Message Respons", message);
 
   if (message.hasMedia) {
-    // Unduh media dan simpan ke dalam folder 'media'
-    const mediaData = await message.downloadMedia();
-    const filedirectory = `./public/media/${number}/`;
-    if (!fs.existsSync(filedirectory)) {
-      fs.mkdirSync(filedirectory);
+    try {
+      const mediaData = await message.downloadMedia();
+      const filedirectory = `./public/media/${number}/`;
+      if (!fs.existsSync(filedirectory)) {
+        fs.mkdirSync(filedirectory);
+      }
+      const mediaFileName = `${filedirectory}/${time}.${
+        mediaData.mimetype.split("/")[1]
+      }`;
+
+      // Tulis data media ke file
+      fs.writeFileSync(mediaFileName, mediaData.data, "base64");
+
+      console.log(`Media file saved at: ${mediaFileName}`);
+    } catch (error) {
+      console.log(`Media file Error : ${error}`);
     }
-    const mediaFileName = `${filedirectory}/${time}.${
-      mediaData.mimetype.split("/")[1]
-    }`;
-
-    // Tulis data media ke file
-    fs.writeFileSync(mediaFileName, mediaData.data, "base64");
-
-    console.log(`Media file saved at: ${mediaFileName}`);
+    // Unduh media dan simpan ke dalam folder 'media'
   }
 
   if (message) {
-    const sql = "INSERT INTO logs (id_wa, text, time) VALUES (?, ?, NOW())";
+    console.log(" log message:", values);
+    if (values.notifyName == "undefined ") values.notifyName = false;
+    if (values.author == "undefined ") values.author = false;
+    try {
+      const sql = `
+      INSERT INTO messages 
+      (id, viewed, body, type, t, notifyName, messageFrom, messageTo, author, self, ack, isNewMsg, create_at) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+    `;
+      // const sql = "INSERT INTO logs (id_wa, text, time) VALUES (?, ?, NOW())";
 
-    db.query(sql, [id_wa, MessageData], (err, results) => {
-      if (err) {
-        console.error("Error executing query:", err);
-        return;
-      }
-      console.log("Chat log saved:", results);
-    });
+      db.query(
+        sql,
+        [
+          values.id,
+          values.viewed,
+          values.body,
+          values.type,
+          values.t,
+          values.notifyName,
+          values.messageFrom,
+          values.messageTo,
+          values.author,
+          values.self,
+          values.ack,
+          values.isNewMsg,
+        ],
+        (err, results) => {
+          if (err) {
+            console.error("Error executing query:", err);
+            return;
+          }
+          console.log("Chat log saved:", results);
+        }
+      );
+    } catch (error) {
+      console.error("Error executing message:", error);
+    }
   }
 
   if (!chat.isGroup) {

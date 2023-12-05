@@ -70,3 +70,23 @@ INSERT INTO `users` (`id`, `username`, `password`, `token`, `time`) VALUES
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+
+
+CREATE TABLE messages (
+    id VARCHAR(255) NOT NULL,
+    viewed BOOLEAN NOT NULL,
+    body TEXT,
+    type VARCHAR(50),
+    t INT,
+    notifyName VARCHAR(255),
+    messageFrom VARCHAR(255),
+    messageTo VARCHAR(255),
+    author VARCHAR(255),
+    self VARCHAR(10),
+    ack INT,
+    isNewMsg BOOLEAN,
+    create_at timestamp NULL DEFAULT NULL,
+
+    PRIMARY KEY (id)
+    
+);
