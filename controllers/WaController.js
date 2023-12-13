@@ -70,11 +70,14 @@ client.on("message", async (message) => {
   if (message.hasMedia) {
     try {
       const mediaData = await message.downloadMedia();
-      const filedirectory = `./public/media/${name}_${number}/`;
-      if (!fs.existsSync(filedirectory)) {
-        fs.mkdirSync(filedirectory);
-      }
-      const mediaFileName = `${filedirectory}/${time}.${
+
+      const filedirectory = `./public/media/${number}/`;
+
+      if (!fs.existsSync(filedirectory)){
+        fs.mkdirSync(filedirectory, { recursive: true });
+        console.log('Directory created:', filedirectory);
+    }
+      const mediaFileName = `${filedirectory}/${name}_${time}.${
         mediaData.mimetype.split("/")[1]
       }`;
 
@@ -86,9 +89,7 @@ client.on("message", async (message) => {
       console.log(`Media file Error : ${error}`);
     }
     // Unduh media dan simpan ke dalam folder 'media'
-  }
-
-  if (!chat.isGroup) {
+  } else if (!chat.isGroup) {
     if (number !== "status") {
       const sql =
         "INSERT INTO mgsin (number, name, chatid, type, massage, time) VALUES (?, ?, ?, ?, ?, NOW())";
