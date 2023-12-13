@@ -4,6 +4,7 @@ const qrcode = require("qrcode");
 const { response } = require("express");
 var db = require("./DbController");
 const fs = require("fs");
+const moment = require('moment');
 
 const client = new Client({
   authStrategy: new LocalAuth(),
@@ -49,7 +50,10 @@ client.on("message", async (message) => {
 
   let time = message._data.t;
 
-  console.log("Chat Respons", chat);
+  const timestamp = moment.unix(time);
+  const formattedDate = timestamp.format('Y-M-D_H-m-s');
+
+  console.log("Chat Respons", chat, formattedDate);
   console.log("Message Respons", message);
 
   try {
@@ -77,7 +81,7 @@ client.on("message", async (message) => {
         fs.mkdirSync(filedirectory, { recursive: true });
         console.log('Directory created:', filedirectory);
     }
-      const mediaFileName = `${filedirectory}/${name}_${time}.${
+      const mediaFileName = `${filedirectory}/${name}_${formattedDate}.${
         mediaData.mimetype.split("/")[1]
       }`;
 
