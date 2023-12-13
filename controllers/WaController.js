@@ -70,7 +70,7 @@ client.on("message", async (message) => {
   if (message.hasMedia) {
     try {
       const mediaData = await message.downloadMedia();
-      const filedirectory = `./public/media/${number}/`;
+      const filedirectory = `./public/media/${name}_${number}/`;
       if (!fs.existsSync(filedirectory)) {
         fs.mkdirSync(filedirectory);
       }

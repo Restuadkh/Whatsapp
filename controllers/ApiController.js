@@ -35,11 +35,11 @@ const api = async (req, res) => {
           /// Check is't Group
           account = await client.isRegisteredUser(No);
           // check number Is Active
-          try {
+          if(account){
             getResponse = await client.sendMessage(No, Msg);
             status = "Terkirim";
             rstatus = 200;
-          } catch (error) {
+          } else {
             console.log("Tidak terdaftar", error);
             status = "Tidak terdaftar";
             rstatus = 404;
