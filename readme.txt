@@ -18,3 +18,5 @@ Tambahkan/edit file "node_modules > WhatsApp > Client.js"
 npm install mysql2
 npm i qrcode-terminal
 npm i body-parser
+
+npm install moment
