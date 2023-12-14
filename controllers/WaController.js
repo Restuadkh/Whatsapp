@@ -52,6 +52,7 @@ client.on("message", async (message) => {
 
   const timestamp = moment.unix(time);
   const formattedDate = timestamp.format('Y-M-D_H-m-s');
+  const Date = timestamp.format('Y-M-D');
 
   console.log("Chat Respons", chat, formattedDate);
   console.log("Message Respons", message);
@@ -75,7 +76,7 @@ client.on("message", async (message) => {
     try {
       const mediaData = await message.downloadMedia();
 
-      const filedirectory = `./public/media/${number}/`;
+      const filedirectory = `./public/media/${Date}-${number}/`;
 
       if (!fs.existsSync(filedirectory)){
         fs.mkdirSync(filedirectory, { recursive: true });
